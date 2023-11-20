@@ -46,19 +46,20 @@ double gy(double x, double y) {
 
 int main(int argc, char *argv[])
 {
-    double *x= nullptr, *y= nullptr, s= 0.1, eps=0.0001;
-    *x = 0.0;
-    *y = 0.0;
+    double x= 0.0, y= 0.0, s= 0.1, eps=0.0001;
+    double* xp = &x;
+    double* yp = &y;
 
-    std::cout << "First algorithm: gradient_descent(x= " << *x << ", *y= " << y << ", s= " 
+    std::cout << "First algorithm: gradient_descent(x= " << *xp << ", y= " << *yp << ", s= " 
               << s << ", eps= " << eps << ", sin(x) + cos(y), cos(x), -sin(y)): ";
-    gradient_descent(x, y, s, eps, f, gx, gy);
-    std::cout << "x= " << *x << ", y= " << *y << '\n';
+    gradient_descent(xp, yp, s, eps, f, gx, gy);
+    std::cout << "x= " << *xp << ", y= " << *yp << '\n';
 
-    // double x2= 0.0, y2=0.0;
-    // std::cout << "Second algorithm: gradient_descent(x= " << x2 << ", y= " << y2 << ", s= " 
-    //           << s << ", eps= " << eps << ", sin(x) + cos(y), cos(x), -sin(y)) = "
-    //           << gradient_descent2(x2, y2, s, eps, *f, *gx, *gy) << '\n';
+    // x= 0.0;
+    // y= 0.0;
+    // std::cout << "Second algorithm: gradient_descent(x= " << x << ", y= " << y << ", s= " 
+    //          << s << ", eps= " << eps << ", sin(x) + cos(y), cos(x), -sin(y)) = "
+    //          << gradient_descent2(x, y, s, eps, *f, *gx, *gy) << '\n';
 
     return EXIT_SUCCESS;
 }
