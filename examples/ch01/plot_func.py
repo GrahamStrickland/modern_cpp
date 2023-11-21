@@ -2,7 +2,6 @@
 import matplotlib
 import matplotlib.pyplot as plt
 matplotlib.rcParams['text.usetex'] = True
-from mpl_toolkits import mplot3d
 import numpy as np
 
 
@@ -30,4 +29,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
