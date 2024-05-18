@@ -26,6 +26,30 @@ int main(int argc, char* argv[])
         std::cout << sum[i] << (i < size - 1 ? ", " : "]");
     std::cout << '\n';
 
+    const int size2= 3;
+    double *x2= new double[size2], *y2= new double[size2],
+           *sum2= new double[size2];
+    for (unsigned i= 0; i < size2; ++i)
+        x2[i]= i+2, y2[i]= 4-2*i;
+    vector_add(size2, x2, y2, sum2);
+
+    std::cout << "x + y = [";
+    for (unsigned i= 0; i < size2; ++i)
+        std::cout << x2[i] << (i < size2 - 1 ? ", " : "]");
+
+    std::cout << " + [";
+    for (unsigned i= 0; i < size2; ++i)
+        std::cout << y2[i] << (i < size2 - 1 ? ", " : "]");
+
+    std::cout << " = [";
+    for (unsigned i= 0; i < size2; ++i)
+        std::cout << sum2[i] << (i < size2 - 1 ? ", " : "]");
+    std::cout << '\n';
+
+    delete[] x2;
+    delete[] y2;
+    delete[] sum2;
+
     return EXIT_SUCCESS;
 }
 
