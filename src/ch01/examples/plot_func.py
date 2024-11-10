@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 import matplotlib
 import matplotlib.pyplot as plt
-matplotlib.rcParams['text.usetex'] = True
 import numpy as np
+
+matplotlib.rcParams["text.usetex"] = True
 
 
 def main() -> None:
