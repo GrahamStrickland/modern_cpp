@@ -1,5 +1,5 @@
-#include <iostream>
 #include <iomanip>
+#include <iostream>
 
 const double START = 0.0;
 const double END   = 1.0;
@@ -13,9 +13,9 @@ double find_zero(double a, double b, double prev) {
     return mid;
 
   if (signbit(res))
-    return find_zero(mid, b, res);
-  else
     return find_zero(a, mid, res);
+  else
+    return find_zero(mid, b, res);
 }
 
 int main(int args, char *argv[]) {
