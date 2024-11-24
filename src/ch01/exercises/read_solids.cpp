@@ -27,13 +27,23 @@ int main(int argc, char *argv[]) {
 
   infile.open(filename);
   if (infile.good()) {
-    double x, b, h, r, volume, surface_area, result;
+    double x, b, h, r, volume, surface_area;
 
     infile >> x >> volume >> surface_area;
-    result = cube_volume(x);
-    assert(result == volume);
-    result = cube_surface(x);
-    assert(result == surface_area);
+    assert(fabs(volume - cube_volume(x)) <= 1E-3);
+    assert(fabs(surface_area - cube_surface(x)) <= 1E-3);
+
+    infile >> b >> h >> volume >> surface_area;
+    assert(fabs(volume - pyramid_volume(b, h)) <= 1E-3);
+    assert(fabs(surface_area - pyramid_surface(b, h)) <= 1E-3);
+
+    infile >> r >> h >> volume >> surface_area;
+    assert(fabs(volume - cylinder_volume(r, h)) <= 1E-3);
+    assert(fabs(surface_area - cylinder_surface(r, h)) <= 1E-3);
+
+    infile >> r >> volume >> surface_area;
+    assert(fabs(volume - sphere_volume(r)) <= 1E-3);
+    assert(fabs(surface_area - sphere_surface(r)) <= 1E-3);
   } else {
     std::cerr << "Unable to open file " << filename << '\n';
   }
