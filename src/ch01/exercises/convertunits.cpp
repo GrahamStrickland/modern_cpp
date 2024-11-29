@@ -1,4 +1,6 @@
-#include <iostream>
+#include <cassert>
+
+const double EPS = 1E-4;
 
 double meter2km(double meters) {
   return meters / 1000.0;
@@ -9,13 +11,13 @@ double usgallons2liter(double gallons) {
 }
 
 int main(int argc, char *argv[]) {
-  double meters = 314.5;
+  double m = 314.5;
 
-  std::cout << "meter2km(" << meters << "m) = " << meter2km(meters) << "km\n";
+  assert(abs(meter2km(m) - 0.3145) <= EPS);
 
-  double gallons = 12;
+  double gal = 12;
 
-  std::cout << "usgallons2liter(" << gallons << "gal) = " << usgallons2liter(gallons) << "l\n";
+  assert(abs(usgallons2liter(gal) - 45.4249) <= EPS);
 
   return EXIT_SUCCESS;
 }
