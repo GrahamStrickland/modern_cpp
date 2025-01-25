@@ -5,7 +5,7 @@
 
 class complex {
 public:
-  friend std::ostream& operator<<(std::ostream&, const complex&);
+  friend std::ostream &operator<<(std::ostream &, const complex &);
   friend class complex_algebra;
 
   double get_r() { return r; }

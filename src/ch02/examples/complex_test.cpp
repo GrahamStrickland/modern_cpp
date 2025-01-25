@@ -4,8 +4,10 @@
 
 int main(int argc, char *argv[]) {
   complex z, c;
-  z.r = 3.5; z.i = 2;
-  c.r = 2; c.i = -3.5;
+  z.r = 3.5;
+  z.i = 2;
+  c.r = 2;
+  c.i = -3.5;
   std::cout << "z is (" << z.r << ", " << z.i << ")\n";
 
   complex *p = &c;

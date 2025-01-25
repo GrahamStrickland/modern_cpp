@@ -32,9 +32,9 @@ int main(int argc, char *argv[]) {
     double r{2.78};
 
     outfile << x << ' ' << cube_volume(x) << ' ' << cube_surface(x) << '\n'
-            << b << ' ' << h << ' ' << pyramid_volume(b, h) << ' ' 
+            << b << ' ' << h << ' ' << pyramid_volume(b, h) << ' '
             << pyramid_surface(b, h) << '\n'
-            << r << ' ' << h << ' ' << cylinder_volume(r, h) << ' ' 
+            << r << ' ' << h << ' ' << cylinder_volume(r, h) << ' '
             << cylinder_surface(r, h) << '\n'
             << r << ' ' << sphere_volume(r) << ' ' << sphere_surface(r) << '\n';
   } else {

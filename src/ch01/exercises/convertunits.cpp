@@ -2,13 +2,9 @@
 
 const double EPS = 1E-4;
 
-double meter2km(double meters) {
-  return meters / 1000.0;
-}
+double meter2km(double meters) { return meters / 1000.0; }
 
-double usgallons2liter(double gallons) {
-  return gallons * 3.785411784;
-}
+double usgallons2liter(double gallons) { return gallons * 3.785411784; }
 
 int main(int argc, char *argv[]) {
   double m = 314.5;

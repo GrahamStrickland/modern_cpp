@@ -1,7 +1,9 @@
 #include <iostream>
 
 void print_middle(double a, double b, double c) {
-  std::cout << (a < b ? (b < c ? b : (a < c ? c : a)) : (a < c ? a : (b < c ? c : b))) << '\n';
+  std::cout << (a < b ? (b < c ? b : (a < c ? c : a))
+                      : (a < c ? a : (b < c ? c : b)))
+            << '\n';
 }
 
 int main(int argc, char *argv[]) {
