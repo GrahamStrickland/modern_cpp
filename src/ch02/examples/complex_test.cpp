@@ -28,5 +28,8 @@ int main(int argc, char *argv[]) {
   c2.set_i(c1.get_i());
   std::cout << "c2 is (" << c2.get_r() << ", " << c2.get_i() << ")\n";
 
+  // test operator<< implementation
+  std::cout << "z = " << z << "\nc = " << c << '\n';
+
   return EXIT_SUCCESS;
 }
