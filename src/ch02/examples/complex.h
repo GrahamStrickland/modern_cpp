@@ -8,7 +8,8 @@ public:
   friend std::ostream &operator<<(std::ostream &, const complex &);
   friend class complex_algebra;
 
-  complex(double rnew, double inew) : r(rnew), i{inew} {}
+  complex(double r = 0, double i = 0) : r{r}, i{i} {}
+
   double get_r() { return r; }
   void set_r(double newr) { r = newr; }
   double get_i() { return i; }
