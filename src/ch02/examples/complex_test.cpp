@@ -18,8 +18,8 @@ int main(int argc, char *argv[]) {
   // std::cout << "*p is (" << p->r << ", " << p->i << ")\n";
 
   complex c1(2.0, 3.0);
-  complex c2{2.0};
-  complex c3;
+  complex c2(c1);
+  complex c3{c1};
 
   // set c1
   c1.set_r(3.0);

@@ -9,6 +9,7 @@ public:
   friend class complex_algebra;
 
   complex(double r = 0, double i = 0) : r{r}, i{i} {}
+  complex(const complex &c) = default;
 
   double get_r() { return r; }
   void set_r(double newr) { r = newr; }
