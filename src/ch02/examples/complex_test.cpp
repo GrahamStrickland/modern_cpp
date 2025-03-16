@@ -3,21 +3,22 @@
 #include "complex.h"
 
 int main(int argc, char *argv[]) {
-  complex z, c;
-  z.r = 3.5;
-  z.i = 2;
-  c.r = 2;
-  c.i = -3.5;
-  std::cout << "z is (" << z.r << ", " << z.i << ")\n";
+  // complex z, c;
+  // z.r = 3.5;
+  // z.i = 2;
+  // c.r = 2;
+  // c.i = -3.5;
+  // std::cout << "z is (" << z.r << ", " << z.i << ")\n";
 
-  complex *p = &c;
+  // complex *p = &c;
 
   // *p.r = 3.5;
   // (*p).r = 3.5;
-  p->r = 3.5;
-  std::cout << "*p is (" << p->r << ", " << p->i << ")\n";
+  // p->r = 3.5;
+  // std::cout << "*p is (" << p->r << ", " << p->i << ")\n";
 
-  complex c1, c2;
+  complex c1(2.0, 3.0);
+  complex c2{2.0, 3.0};
   // set c1
   c1.set_r(3.0);
   c1.set_i(2.0);
@@ -29,7 +30,7 @@ int main(int argc, char *argv[]) {
   std::cout << "c2 is (" << c2.get_r() << ", " << c2.get_i() << ")\n";
 
   // test operator<< implementation
-  std::cout << "z = " << z << "\nc = " << c << '\n';
+  std::cout << "c1 = " << c1 << "\nc2 = " << c2 << '\n';
 
   return EXIT_SUCCESS;
 }
