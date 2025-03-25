@@ -2,7 +2,6 @@
 #define VECTOR_H
 
 #include <cassert>
-#include <memory>
 
 class vector {
 public:
@@ -13,12 +12,22 @@ public:
   }
 
   double &operator[](int index) const { return data[index]; }
+  vector &operator=(const vector &src) {
+    if (this == &src)
+      return *this;
+    assert(my_size == src.my_size);
+    for (int i = 0; i < my_size; ++i)
+      data[i] = src.data[i];
+    return *this;
+  }
 
   friend double dot(const vector &, const vector &);
 
+  ~vector() { delete[] data; }
+
 private:
   int my_size;
-  std::unique_ptr<double[]> data;
+  double *data;
 };
 
 inline double dot(const vector &v, const vector &w) {

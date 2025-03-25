@@ -16,6 +16,9 @@ int main(int argc, char *argv[]) {
 
   std::cout << "dot(v1, v2) is " << dot(v1, v2) << '\n';
   // std::cout << "dot(8, 8) is " << dot(8, 8) << '\n';
+  
+  v1 = v2;
+  std::cout << "after v1 = v2, dot(v1, v2) is " << dot(v1, v2) << '\n';
 
   return EXIT_SUCCESS;
 }
