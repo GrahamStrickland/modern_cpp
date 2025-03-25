@@ -17,6 +17,18 @@ public:
   double get_i() { return i; }
   void set_i(double newi) { i = newi; }
 
+  complex &operator=(const complex &src) {
+    r = src.r;
+    i = src.i;
+    return *this;
+  }
+
+  complex &operator=(double nr) {
+    r = nr;
+    i = 0.0;
+    return *this;
+  }
+
 private:
   double r = 0.0, i = 0.0;
 };

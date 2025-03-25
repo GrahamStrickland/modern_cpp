@@ -47,5 +47,14 @@ int main(int argc, char *argv[]) {
 
   std::cout << "|7| = " << complex_abs(complex{7.0}) << '\n';
 
+  z3 = z2;
+  std::cout << "z1 = " << z1 << "\nz2 = " << z2 << "\nz3 = " << z3 << '\n';
+
+  z1 = z2 = z3;
+  std::cout << "z1 = " << z1 << "\nz2 = " << z2 << "\nz3 = " << z3 << '\n';
+
+  complex c = 7.5;
+  std::cout << "c = " << c << '\n';
+
   return EXIT_SUCCESS;
 }
