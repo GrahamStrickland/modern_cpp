@@ -14,5 +14,8 @@ int main(int argc, char *argv[]) {
   v1[3] = 3.14;
   std::cout << "v2[3] is " << v2[3] << '\n';
 
+  std::cout << "dot(v1, v2) is " << dot(v1, v2) << '\n';
+  // std::cout << "dot(8, 8) is " << dot(8, 8) << '\n';
+
   return EXIT_SUCCESS;
 }
