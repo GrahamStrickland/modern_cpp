@@ -1,6 +1,7 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
+#include <cassert>
 #include <memory>
 
 class vector {
@@ -21,6 +22,7 @@ private:
 };
 
 inline double dot(const vector &v, const vector &w) {
+  assert(v.my_size == w.my_size);
   double result = 0.0;
 
   for (int i = 0; i < v.my_size; i++) {
