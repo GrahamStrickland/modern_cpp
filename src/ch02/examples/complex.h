@@ -8,8 +8,9 @@ public:
   friend std::ostream &operator<<(std::ostream &, const complex &);
   friend class complex_algebra;
 
-  explicit complex(double nr = 0.0, double i = 0.0) : r{nr}, i{i} {}
-  complex(const complex &c) = default;
+  complex(double r, double i) : r{r}, i{i} {}
+  complex(double r) : r{r} {}
+  complex() {}
 
   double get_r() { return r; }
   void set_r(double newr) { r = newr; }
@@ -17,7 +18,7 @@ public:
   void set_i(double newi) { i = newi; }
 
 private:
-  double r, i;
+  double r = 0.0, i = 0.0;
 };
 
 double inline real(complex c) { return c.get_r(); }
