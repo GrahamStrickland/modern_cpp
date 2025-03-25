@@ -34,16 +34,18 @@ int main(int argc, char *argv[]) {
   // test operator<< implementation
   std::cout << "c1 = " << c1 << "\nc2 = " << c2 << "\nc3 = " << c3 << '\n';
 
-  complex z1, z2{}, z3{4}, z4 = 4, z5{0, 1};
+  complex z1, z2{}, z3{4}, /*z4 = 4,*/ z5{0, 1};
 
   std::cout << "z1 = " << z1 << "\nz2 = " << z2 << "\nz3 = " << z3
-            << "\nz4 = " << z4 << "\nz5 = " << z5 << '\n';
+            /*<< "\nz4 = " << z4*/ << "\nz5 = " << z5 << '\n';
 
   complex z6(3.0, 2.0),
           z7(z6),
           z8{z6};
 
   std::cout << "z6 = " << z6 << "\nz7 = " << z7 << "\nz8 = " << z8 << '\n';
+
+  std::cout << "|7| = " << complex_abs(complex{7.0}) << '\n';
 
   return EXIT_SUCCESS;
 }
