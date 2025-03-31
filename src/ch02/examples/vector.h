@@ -1,7 +1,9 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
+#include <algorithm>
 #include <cassert>
+#include <initializer_list>
 
 class vector {
 public:
@@ -9,6 +11,10 @@ public:
   vector(const vector &v) : my_size{v.my_size}, data{new double[my_size]} {
     for (unsigned i = 0; i < my_size; i++)
       data[i] = v.data[i];
+  }
+  vector(std::initializer_list<double> values)
+      : my_size{static_cast<int>(values.size())}, data{new double[my_size]} {
+    std::copy(begin(values), end(values), data);
   }
 
   double &operator[](int index) const { return data[index]; }
@@ -18,6 +24,11 @@ public:
     assert(my_size == src.my_size);
     for (int i = 0; i < my_size; ++i)
       data[i] = src.data[i];
+    return *this;
+  }
+  vector &operator=(std::initializer_list<double> values) {
+    assert(my_size == values.size());
+    std::copy(begin(values), end(values), data);
     return *this;
   }
 
