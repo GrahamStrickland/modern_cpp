@@ -1,26 +1,40 @@
 #include "matrix_type.h"
 #include "vector.h"
 
-void lu_dcmp(matrix_type A, int n, int *indx, double *d);
-vector lu_solve(matrix_type A, vector u);
+#include <cmath>
+#include <iostream>
+#include <memory>
+#include <stdexcept>
+
+void lu_dcmp(matrix_type &A, int n, std::shared_ptr<int[]> indx,
+             std::shared_ptr<double> d);
+vector lu_solve(matrix_type &A, vector &u);
 
 int main(int argc, char *argv[]) {
   matrix_type A(3, 3);
-  vector x = lu_solve(A, vector{1.0, 2.0, 3.0});
+  A = {{1.0, 2.0, 3.0}, {0.0, 4.0, 5.0}, {0.0, 0.0, 6.0}};
+
+  std::cout << "A = " << A;
+
+  vector u{1.0, 2.0, 3.0};
+  vector x = lu_solve(A, u);
+
+  std::cout << "lu_solve(A, " << u << ") = " << A;
 
   return EXIT_SUCCESS;
 }
 
-void lu_dcmp(matrix_type A, int n, int *indx, double *d) {
-  int i, imax, j, k;
+void lu_dcmp(matrix_type &A, int n, std::shared_ptr<int[]> indx,
+             std::shared_ptr<double> d) {
+  int imax;
   double big, dum, sum, temp;
-  vector vv = {1.0, 1.0, 1.0};
+  vector vv{1.0, 1.0, 1.0};
 
   *d = 1.0;
-  for (i = 0; i < n; i++) {
+  for (int i = 0; i < n; i++) {
     big = 0.0;
-    for (j = 0; j < n; j++)
-      if ((temp = fabs(A[i][j])) > big)
+    for (int j = 0; j < n; j++)
+      if ((temp = fabs(A(i, j))) > big)
         big = temp;
 
     if (big == 0.0)
@@ -29,20 +43,20 @@ void lu_dcmp(matrix_type A, int n, int *indx, double *d) {
     vv[i] = 1.0 / big;
   }
 
-  for (j = 0; j < n; j++) {
-    for (i = 0; i < j; i++) {
-      sum = A[i][j];
-      for (k = 0; k < i; k++)
-        sum -= A[i][j] * A[k][j];
-      A[i][j] = sum;
+  for (int j = 0; j < n; j++) {
+    for (int i = 0; i < j; i++) {
+      sum = A(i, j);
+      for (int k = 0; k < i; k++)
+        sum -= A(i, j) * A(k, j);
+      A(i, j) = sum;
     }
 
     big = 0.0;
-    for (i = j; i < n; i++) {
-      sum = A[i][j];
-      for (k = 0; k < j; k++)
-        sum -= A[i][j] * A[k][j];
-      A[i][j] = sum;
+    for (int i = j; i < n; i++) {
+      sum = A(i, j);
+      for (int k = 0; k < j; k++)
+        sum -= A(i, j) * A(k, j);
+      A(i, j) = sum;
 
       if ((dum = vv[i] * fabs(sum)) >= big) {
         big = dum;
@@ -51,57 +65,54 @@ void lu_dcmp(matrix_type A, int n, int *indx, double *d) {
     }
 
     if (j != imax) {
-      for (k = 0; k < n; k++) {
-        sum = A[imax][k];
-        A[imax][k] = A[j][k];
-        A[j][k] = dum;
+      for (int k = 0; k < n; k++) {
+        sum = A(imax, k);
+        A(imax, k) = A(j, k);
+        A(j, k) = dum;
       }
       *d = -(*d);
       vv[imax] = vv[j];
     }
     indx[j] = imax;
 
-    if (A[j][j] == 0.0)
-      A[j][j] = 1.0e-20;
+    if (A(j, j) == 0.0)
+      A(j, j) = 1.0e-20;
 
     if (j != n) {
-      dum = 1.0 / A[j][j];
-      for (i = j; i < n; i++)
-        A[i][j] *= dum;
+      dum = 1.0 / A(j, j);
+      for (int i = j; i < n; i++)
+        A(i, j) *= dum;
     }
   }
 }
 
-vector lu_solve(matrix_type A, vector u) {
-  int i, ii = 0, ip, j;
+vector lu_solve(matrix_type &A, vector &u) {
+  int ii = 0, ip;
   double sum;
-  double *d = nullptr;
-  int *indx = new int[3];
+  std::shared_ptr<double> d{nullptr};
+  std::shared_ptr<int[]> indx{new int[3]};
   vector x{};
 
   lu_dcmp(A, 3, indx, d);
 
-  for (i = 0; i < 3; i++) {
+  for (int i = 0; i < 3; i++) {
     ip = indx[i];
     sum = u[ip];
     u[ip] = u[i];
-    if (ii)
-      for (j = ii; j <= i; j++)
-        sum -= A[i][j] * u[j];
-    else if (sum)
+    if (ii > 0)
+      for (int j = ii; j <= i; j++)
+        sum -= A(i, j) * u[j];
+    else if (sum > 0)
       ii = i;
     u[i] = sum;
   }
 
-  for (i = 2; i >= 0; i--) {
+  for (int i = 2; i >= 0; i--) {
     sum = u[i];
-    for (j = i + 1; j < 3; j++)
-      sum -= A[i][j] * u[j];
-    x[i] = sum / A[i][i];
+    for (int j = i + 1; j < 3; j++)
+      sum -= A(i, j) * u[j];
+    x[i] = sum / A(i, i);
   }
-
-  delete d;
-  delete[] indx;
 
   return x;
 }

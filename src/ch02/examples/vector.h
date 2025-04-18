@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <cassert>
 #include <initializer_list>
+#include <iostream>
 
 class vector {
 public:
@@ -33,6 +34,7 @@ public:
   }
 
   friend double dot(const vector &, const vector &);
+  friend std::ostream &operator<<(std::ostream &out, const vector &v);
 
   ~vector() { delete[] data; }
 
@@ -50,5 +52,15 @@ inline double dot(const vector &v, const vector &w) {
   }
 
   return result;
+}
+
+inline std::ostream &operator<<(std::ostream &out, const vector &v) {
+  out << '[';
+
+  for (int i = 0; i < v.my_size; i++) {
+    out << v.data[i] << (i < v.my_size - 1 ? ", " : "");
+  }
+
+  return out << ']';
 }
 #endif // VECTOR_H
