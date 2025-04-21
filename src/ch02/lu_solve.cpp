@@ -11,14 +11,12 @@ vector lu_solve(matrix_type &A, vector &u);
 
 int main() {
   matrix_type A(3, 3);
-  A = {{1.0, 2.0, 3.0}, {0.0, 4.0, 5.0}, {0.0, 0.0, 6.0}};
+  A = {{1.0, 2.0, -3.0}, {2.0, -1.0, 4.0}, {1.0, -1.0, 1.0}};
+  vector u{6.0, 1.0, 3.0};
 
-  std::cout << "A = " << A << '\n';
-
-  vector u{1.0, 2.0, 3.0};
-  std::cout << "\nlu_solve(A, " << u << ") = "; 
+  std::cout << "u = " << u << ",\nA = " << A << '\n';
   vector x = lu_solve(A, u);
-  std::cout << A << '\n';
+  std::cout << "Solution = " << x << '\n';
 
   return EXIT_SUCCESS;
 }
@@ -86,7 +84,7 @@ vector lu_solve(matrix_type &A, vector &u) {
   int ii = 0, ip;
   double sum;
   std::shared_ptr<int[]> indx{new int[3]};
-  vector x{};
+  vector x{0.0, 0.0, 0.0};
 
   lu_dcmp(A, 3, indx);
 
