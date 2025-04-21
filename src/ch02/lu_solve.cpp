@@ -6,31 +6,28 @@
 #include <memory>
 #include <stdexcept>
 
-void lu_dcmp(matrix_type &A, int n, std::shared_ptr<int[]> indx,
-             std::shared_ptr<double> d);
+void lu_dcmp(matrix_type &A, int n, std::shared_ptr<int[]> indx);
 vector lu_solve(matrix_type &A, vector &u);
 
-int main(int argc, char *argv[]) {
+int main() {
   matrix_type A(3, 3);
   A = {{1.0, 2.0, 3.0}, {0.0, 4.0, 5.0}, {0.0, 0.0, 6.0}};
 
-  std::cout << "A = " << A;
+  std::cout << "A = " << A << '\n';
 
   vector u{1.0, 2.0, 3.0};
+  std::cout << "\nlu_solve(A, " << u << ") = "; 
   vector x = lu_solve(A, u);
-
-  std::cout << "lu_solve(A, " << u << ") = " << A;
+  std::cout << A << '\n';
 
   return EXIT_SUCCESS;
 }
 
-void lu_dcmp(matrix_type &A, int n, std::shared_ptr<int[]> indx,
-             std::shared_ptr<double> d) {
+void lu_dcmp(matrix_type &A, int n, std::shared_ptr<int[]> indx) {
   int imax;
   double big, dum, sum, temp;
   vector vv{1.0, 1.0, 1.0};
 
-  *d = 1.0;
   for (int i = 0; i < n; i++) {
     big = 0.0;
     for (int j = 0; j < n; j++)
@@ -70,7 +67,6 @@ void lu_dcmp(matrix_type &A, int n, std::shared_ptr<int[]> indx,
         A(imax, k) = A(j, k);
         A(j, k) = dum;
       }
-      *d = -(*d);
       vv[imax] = vv[j];
     }
     indx[j] = imax;
@@ -89,11 +85,10 @@ void lu_dcmp(matrix_type &A, int n, std::shared_ptr<int[]> indx,
 vector lu_solve(matrix_type &A, vector &u) {
   int ii = 0, ip;
   double sum;
-  std::shared_ptr<double> d{nullptr};
   std::shared_ptr<int[]> indx{new int[3]};
   vector x{};
 
-  lu_dcmp(A, 3, indx, d);
+  lu_dcmp(A, 3, indx);
 
   for (int i = 0; i < 3; i++) {
     ip = indx[i];

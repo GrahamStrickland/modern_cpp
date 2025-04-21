@@ -10,7 +10,7 @@ class vector {
 public:
   explicit vector(int size) : my_size{size}, data{new double[size]} {}
   vector(const vector &v) : my_size{v.my_size}, data{new double[my_size]} {
-    for (unsigned i = 0; i < my_size; i++)
+    for (int i = 0; i < my_size; i++)
       data[i] = v.data[i];
   }
   vector(std::initializer_list<double> values)
@@ -28,7 +28,7 @@ public:
     return *this;
   }
   vector &operator=(std::initializer_list<double> values) {
-    assert(my_size == values.size());
+    assert(static_cast<unsigned int>(my_size) == values.size());
     std::copy(begin(values), end(values), data);
     return *this;
   }
