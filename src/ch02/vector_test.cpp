@@ -1,12 +1,12 @@
 #include <iostream>
 
-#include "matrix_type.h"
+// #include "matrix_type.h"
 #include "vector.h"
 
-void lu_dcmp(matrix_type A, int n, int *indx, double *d);
-vector lu_solve(matrix_type A, vector u);
+// void lu_dcmp(matrix_type A, int n, int *indx, double *d);
+// vector lu_solve(matrix_type A, vector u);
 
-int main(int argc, char *argv[]) {
+int main() {
   vector v1(4);
   v1[0] = v1[1] = 1.0;
   v1[2] = 2.0;
@@ -29,8 +29,13 @@ int main(int argc, char *argv[]) {
 
   v3 = {1.0, 2.0, 3.0};
 
-  matrix_type A(3, 3);
-  vector x = lu_solve(A, vector{1.0, 2.0, 3.0});
+  // matrix_type A(3, 3);
+  // vector x = lu_solve(A, vector{1.0, 2.0, 3.0});
+
+  vector v5 = {{1.0, 2.0, 3.0}}, v6{3, 4, 5};
+
+  double d = dot({3, 4, 5}, {7, 8, 9});
+  std::cout << "dot({3, 4, 5}), {7, 8, 9}) = " << d << '\n';
 
   return EXIT_SUCCESS;
 }

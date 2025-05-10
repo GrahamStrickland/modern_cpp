@@ -2,7 +2,7 @@
 
 #include "complex.h"
 
-int main(int argc, char *argv[]) {
+int main() {
   // complex z, c;
   // z.r = 3.5;
   // z.i = 2;
@@ -55,6 +55,12 @@ int main(int argc, char *argv[]) {
 
   complex c = 7.5;
   std::cout << "c = " << c << '\n';
+
+  complex c4{7.0, 8}, c5 = {0, 1}, c6 = {9.3}, c7 = {c4};
+
+  const complex cc = {c6};
+
+  std::cout << '(' << cc << ") - (" << c4 << ") = " << complex::subtract(cc, c4) << '\n';
 
   return EXIT_SUCCESS;
 }

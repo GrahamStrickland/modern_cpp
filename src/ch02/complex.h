@@ -29,6 +29,10 @@ public:
     return *this;
   }
 
+  static complex subtract(const complex &c1, const complex &c2) {
+    return {c1.r - c2.r, c1.i - c2.i};
+  }
+
 private:
   double r = 0.0, i = 0.0;
 };
