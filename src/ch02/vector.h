@@ -18,6 +18,11 @@ public:
         data{new double[my_size]} {
     std::copy(begin(values), end(values), data);
   }
+  vector(vector &&v) noexcept : my_size{v.my_size}, data{v.data} {
+    v.data = nullptr;
+    v.my_size = 0;
+    std::cout << "Move constructor called" << '\n';
+  }
 
   double &operator[](unsigned index) const { return data[index]; }
   vector &operator=(const vector &src) {
@@ -31,6 +36,15 @@ public:
   vector &operator=(std::initializer_list<double> values) {
     assert(my_size == values.size());
     std::copy(begin(values), end(values), data);
+    return *this;
+  }
+  vector &operator=(vector &&src) noexcept {
+    assert(my_size == src.my_size);
+    delete[] data;
+    data = src.data;
+    src.data = nullptr;
+    src.my_size = 0;
+    std::cout << "Move assignment operator called" << '\n';
     return *this;
   }
 
