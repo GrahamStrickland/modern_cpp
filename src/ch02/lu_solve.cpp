@@ -2,6 +2,7 @@
 #include "vector.h"
 
 #include <cmath>
+#include <cstdlib>
 #include <iostream>
 #include <memory>
 #include <stdexcept>

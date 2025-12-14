@@ -1,4 +1,5 @@
 #include <cassert>
+#include <cstdlib>
 
 const double EPS = 1E-4;
 

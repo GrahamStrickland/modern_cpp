@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <iostream>
 
 void print_middle(double a, double b, double c) {

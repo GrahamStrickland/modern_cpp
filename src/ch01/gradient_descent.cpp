@@ -1,4 +1,5 @@
 #include <cmath>
+#include <cstdlib>
 #include <iostream>
 
 void gradient_descent(double *x, double *y, double s, double eps,

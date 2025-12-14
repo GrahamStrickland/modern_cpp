@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <iostream>
 
 void increment(int &x) { x++; }

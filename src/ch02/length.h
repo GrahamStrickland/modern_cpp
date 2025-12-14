@@ -15,7 +15,7 @@ public:
     return length{scalar * len.l};
   }
 
-  friend std::ostream& operator<<(std::ostream& os, length len) {
+  friend std::ostream &operator<<(std::ostream &os, length len) {
     os << len.l / 1000.0 << "km";
     return os;
   }

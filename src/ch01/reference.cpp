@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <iostream>
 
 double &square_ref(double d) // Error: returns stale reference

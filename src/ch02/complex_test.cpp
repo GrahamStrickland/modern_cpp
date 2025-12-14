@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <iostream>
 
 #include "complex.h"
@@ -60,7 +61,8 @@ int main() {
 
   const complex cc = {c6};
 
-  std::cout << '(' << cc << ") - (" << c4 << ") = " << complex::subtract(cc, c4) << '\n';
+  std::cout << '(' << cc << ") - (" << c4 << ") = " << complex::subtract(cc, c4)
+            << '\n';
 
   return EXIT_SUCCESS;
 }

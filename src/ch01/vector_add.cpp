@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <iostream>
 
 void vector_add(unsigned size, const double v1[], const double v2[],
