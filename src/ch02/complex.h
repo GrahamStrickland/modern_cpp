@@ -33,6 +33,8 @@ public:
     return {c1.r - c2.r, c1.i - c2.i};
   }
 
+  ~complex() { std::cout << "So long and thanks for all the fish.\n"; }
+
 private:
   double r = 0.0, i = 0.0;
 };
