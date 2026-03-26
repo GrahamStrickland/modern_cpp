@@ -61,6 +61,24 @@ int main() {
   v7 = std::move(v6);
   std::cout << "After move, v7 = " << v7 << ", v6 = " << v6 << '\n';
 
+  double sum = 0.0;
+  for (int i = 0; i < v7.size(); ++i)
+    sum += v7.at(i);
+
+  std::cout << "Sum of elements in " << v7 << ": " << sum << '\n';
+
+  const vector v8 = std::move(v5);
+  sum = 0.0;
+  for (int i = 0; i < v7.size(); ++i) {
+    sum += v8[i];
+    // sum += v7.operator[](i);
+  }
+
+  std::cout << "Sum of elements in " << v8 << ": " << sum << '\n';
+
+  // (v7 + 2) = x;
+  // (v7 + w)[i] = 7.3;
+
   return EXIT_SUCCESS;
 }
 

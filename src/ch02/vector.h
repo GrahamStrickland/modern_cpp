@@ -24,8 +24,20 @@ public:
     std::cout << "Move constructor called" << '\n';
   }
 
-  double &operator[](unsigned index) const { return data[index]; }
-  vector &operator=(const vector &src) {
+  double at(unsigned i) {
+    assert(i >= 0 && i < my_size);
+    return data[i];
+  }
+  double &operator[](unsigned i) & {
+    assert(i >= 0 && i < my_size);
+    return data[i];
+  }
+  double &operator[](unsigned i) const & {
+    assert(i >= 0 && i < my_size);
+    return data[i];
+  }
+  double operator[](unsigned i) && = delete;
+  vector &operator=(const vector &src) & {
     if (this == &src)
       return *this;
     assert(my_size == src.my_size);
@@ -47,6 +59,8 @@ public:
     std::cout << "Move assignment operator called" << '\n';
     return *this;
   }
+
+  unsigned size() const { return my_size; }
 
   friend double dot(const vector &, const vector &);
   friend std::ostream &operator<<(std::ostream &out, const vector &v);
