@@ -64,5 +64,31 @@ int main() {
   std::cout << '(' << cc << ") - (" << c4 << ") = " << complex::subtract(cc, c4)
             << '\n';
 
+  c.set_r(c.get_r() + 5.);
+
+  std::cout << "c is (" << c.get_r() << ", " << c.get_i() << ")\n";
+
+  c.real() += 5.;
+
+  std::cout << "c is (" << c.get_r() << ", " << c.get_i() << ")\n";
+
+  real(c) += 5.;
+
+  std::cout << "c is (" << c.get_r() << ", " << c.get_i() << ")\n";
+
+  const complex c8{1.2, 3.4};
+
+  std::cout << "c8 is (" << real(c8) << ", " << imag(c8) << ")\n";
+
+  // real(c8) += 5.;
+
+  double &rr = real(c);
+
+  std::cout << "rr = " << rr << '\n';
+
+  double r2 = real(complex(3, 7)) * 2.0;
+
+  std::cout << "r2 = " << r2 << '\n';
+
   return EXIT_SUCCESS;
 }
