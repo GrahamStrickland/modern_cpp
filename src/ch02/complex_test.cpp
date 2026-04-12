@@ -90,5 +90,15 @@ int main() {
 
   std::cout << "r2 = " << r2 << '\n';
 
+  complex cc2{7.0, 8.0}, c9{cc2};
+
+  std::cout << "cc2 + 9 is " << cc2 + c9 << std::endl;
+
+  std::cout << "cc2 + 4.2 is " << cc2 + 4.2 << std::endl;
+
+  std::cout << "4.2 + c9 is " << 4.2 + c9 << std::endl;
+
+  std::cout << "-cc2 + 4.2 is " << -cc2 + 4.2 << std::endl;
+
   return EXIT_SUCCESS;
 }

@@ -1,6 +1,5 @@
 #include "complex.h"
 
-std::ostream &operator<<(std::ostream &outs, const complex &c) {
-  outs << c.r << " + " << c.i << "i";
-  return outs;
+std::ostream &operator<<(std::ostream &os, const complex &c) {
+  return os << '(' << real(c) << ',' << imag(c) << ')';
 }

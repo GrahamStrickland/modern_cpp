@@ -37,6 +37,14 @@ public:
     return *this;
   }
 
+  // complex operator+(const complex &c2) const {
+  //   return complex(r + c2.r, i + c2.i);
+  // }
+
+  // complex operator+(double r2) const { return complex(r + r2, i); }
+
+  complex operator-() const { return complex(-r, -i); }
+
   static complex subtract(const complex &c1, const complex &c2) {
     return {c1.r - c2.r, c1.i - c2.i};
   }
@@ -62,5 +70,21 @@ inline const double &real(const complex &c) { return c.r; }
 
 inline double &imag(complex &c) { return c.imag(); }
 inline const double &imag(const complex &c) { return c.i; }
+
+inline complex operator+(const complex &c1, double d) {
+  return complex(real(c1) + d, imag(c1));
+}
+
+inline complex operator+(double d, const complex &c2) {
+  return complex(d + real(c2), imag(c2));
+}
+
+inline complex operator+(const complex &c1, const complex &c2) {
+  return complex(real(c1) + real(c2), imag(c1) + imag(c2));
+}
+
+// inline complex operator-(const complex &c1) {
+//   return complex(-real(c1), -imag(c1));
+// }
 
 #endif // COMPLEX_H
