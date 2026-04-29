@@ -2,6 +2,7 @@
 #define RATIONAL_H
 
 #include <cassert>
+#include <compare>
 
 struct zero_denominator {};
 
@@ -16,6 +17,10 @@ public:
     return p * ll(r2.q) == r2.p * ll(q);
   }
 
+  std::weak_ordering operator<=>(const rational &r2) const {
+    return p * ll(r2.q) <=> r2.p * ll(q);
+  }
+
   rational operator+(rational right) {
     return rational(p * right.q + right.p * q, q * right.q);
   }
@@ -24,6 +29,7 @@ public:
   }
 
   double get_value() { return static_cast<double>(p) / static_cast<double>(q); }
+  int denominator() { return q; }
 
 private:
   static_assert(sizeof(long long) > sizeof(unsigned),

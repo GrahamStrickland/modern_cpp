@@ -24,10 +24,12 @@ int main(int argc, char *argv[]) {
   std::cout << "half != third: " << std::boolalpha << (half != third)
             << std::endl;
 
-  rational half2{2, 4};
+  rational half1{1, 2}, half2{2, 4};
 
-  std::cout << "half == half2: " << std::boolalpha << (half == half2)
+  std::cout << "half1 == half2: " << std::boolalpha << (half1 == half2)
             << std::endl;
+  std::cout << "half1.denominator() == half2.denominator(): "
+            << (half1.denominator() == half2.denominator()) << std::endl;
 
   return EXIT_SUCCESS;
 }
