@@ -16,5 +16,10 @@ int main(int argc, char *argv[]) {
   p1 = {1.0, 1.0, 1.0};
   std::cout << "p1(x) = " << p1 << '\n';
 
+  std::cout << "p1(x) + p2(x) = (" << p1 << ") + (" << p2 << ") = " << p1 + p2
+            << '\n';
+  std::cout << "p4(x) + p2(x) = (" << p4 << ") + (" << p2 << ") = " << p4 + p2
+            << '\n';
+
   return EXIT_SUCCESS;
 }
