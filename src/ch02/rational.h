@@ -1,40 +1,42 @@
 #ifndef RATIONAL_H
 #define RATIONAL_H
 
-#include <cassert>
 #include <compare>
+#include <ostream>
 
 struct zero_denominator {};
 
 class rational {
 public:
-  rational(int p, int q) : p{p}, q{q} {
-    if (q == 0)
-      throw zero_denominator{};
-  }
+  rational(int a, int b);
+  rational(int a);
 
-  bool operator==(const rational &r2) const {
-    return p * ll(r2.q) == r2.p * ll(q);
-  }
+  bool operator==(const rational &r2) const;
 
-  std::weak_ordering operator<=>(const rational &r2) const {
-    return p * ll(r2.q) <=> r2.p * ll(q);
-  }
+  std::weak_ordering operator<=>(const rational &r2) const;
 
-  rational operator+(rational right) {
-    return rational(p * right.q + right.p * q, q * right.q);
-  }
-  rational operator-(rational right) {
-    return rational(p * right.q - right.p * q, q * right.q);
-  }
+  rational operator+(rational right);
+  rational operator-(rational right);
+  rational operator*(rational right);
+  rational operator/(rational right);
 
-  double get_value() { return static_cast<double>(p) / static_cast<double>(q); }
-  int denominator() { return q; }
+  void operator+=(rational right);
+  void operator-=(rational right);
+  void operator*=(rational right);
+  void operator/=(rational right);
+
+  double get_value();
+  int denominator();
+
+  friend std::ostream &operator<<(std::ostream &os, const rational &r);
 
 private:
+  void normalize(int a, int b);
+
   static_assert(sizeof(long long) > sizeof(unsigned),
                 "Correct comparison not guaranteed.");
   static long long ll(unsigned x) { return static_cast<long long>(x); }
+
   int p;
   int q;
 };
