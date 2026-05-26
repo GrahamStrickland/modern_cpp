@@ -9,7 +9,7 @@ public:
   polynomial(std::size_t degree);
   polynomial(std::size_t degree, std::vector<double> coeffs);
   polynomial(std::vector<double> coeffs);
-  polynomial(polynomial &p);
+  polynomial(polynomial &p) = default;
   polynomial(polynomial &&p) noexcept;
 
   polynomial &operator=(const std::vector<double> src);

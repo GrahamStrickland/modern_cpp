@@ -2,6 +2,9 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <vector>
+
+polynomial f(double c2, double c1, double c0);
 
 int main(int argc, char *argv[]) {
   polynomial p1{1}, p2{3, {1.0, 2.0, 3.0, 4.0}}, p3{{1.0, 0.0, 2.0}},
@@ -39,5 +42,14 @@ int main(int argc, char *argv[]) {
   std::cout << "p4(x) * p2(x) = (" << p4 << ") * (" << p2 << ") = " << p4 * p2
             << '\n';
 
+  polynomial p6 = f(2.1, 1.2, 0.2);
+  
+  std::cout << "p6 = " << p6 << '\n';
+
   return EXIT_SUCCESS;
+}
+
+polynomial f(double c2, double c1, double c0) {
+  std::vector<double> v{c0, c1, c2};
+  return polynomial(v);
 }

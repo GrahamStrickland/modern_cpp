@@ -16,8 +16,6 @@ polynomial::polynomial(std::size_t degree, std::vector<double> coeffs)
 polynomial::polynomial(std::vector<double> coeffs)
     : coeffs{coeffs}, degree{coeffs.size() - 1} {};
 
-polynomial::polynomial(polynomial &p) : coeffs{p.coeffs}, degree{p.degree} {};
-
 polynomial::polynomial(polynomial &&p) noexcept
     : coeffs{std::move(p.coeffs)}, degree{p.degree} {
   p.degree = 0;
