@@ -6,49 +6,22 @@
 
 class polynomial {
 public:
-  polynomial(std::size_t degree) : degree{degree} {
-    coeffs = std::vector<double>();
-    for (int i = 0; i <= degree; i++)
-      coeffs.push_back(0.0);
-  };
-  polynomial(std::size_t degree, std::vector<double> coeffs)
-      : coeffs{coeffs}, degree{degree} {
-    assert(degree == coeffs.size() - 1);
-  };
-  polynomial(std::vector<double> coeffs)
-      : coeffs{coeffs}, degree{coeffs.size() - 1} {};
-  polynomial(polynomial &p) : coeffs{p.coeffs}, degree{p.degree} {};
-  polynomial(polynomial &&p) noexcept
-      : coeffs{std::move(p.coeffs)}, degree{p.degree} {
-    p.degree = 0;
-  };
+  polynomial(std::size_t degree);
+  polynomial(std::size_t degree, std::vector<double> coeffs);
+  polynomial(std::vector<double> coeffs);
+  polynomial(polynomial &p);
+  polynomial(polynomial &&p) noexcept;
 
-  polynomial &operator=(const std::vector<double> src) {
-    assert(degree == coeffs.size() - 1);
-
-    coeffs.reserve(src.size());
-    for (std::size_t i = 0; i < coeffs.size(); i++)
-      coeffs[i] = src[i];
-
-    return *this;
-  }
-  polynomial &operator=(polynomial &&p) noexcept {
-    assert(degree == p.degree);
-    std::swap(coeffs, p.coeffs);
-    std::swap(degree, p.degree);
-    return *this;
-  }
+  polynomial &operator=(const std::vector<double> src);
+  polynomial &operator=(polynomial &&p) noexcept;
 
   friend std::ostream &operator<<(std::ostream &os, const polynomial &p);
 
-  std::size_t get_degree() const { return degree; }
+  std::size_t get_degree() const;
 
-  double get_coeff(std::size_t index) const {
-    assert(index <= degree);
-    return coeffs[index];
-  }
+  double get_coeff(std::size_t index) const;
 
-  ~polynomial() {}
+  ~polynomial();
 
 private:
   std::vector<double> coeffs;
