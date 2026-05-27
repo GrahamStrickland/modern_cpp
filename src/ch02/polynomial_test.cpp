@@ -42,9 +42,9 @@ int main(int argc, char *argv[]) {
   std::cout << "p4(x) * p2(x) = (" << p4 << ") * (" << p2 << ") = " << p4 * p2
             << '\n';
 
-  polynomial p6 = f(2.1, 1.2, 0.2);
+  p3 = f(2.1, 1.2, 0.2);
   
-  std::cout << "p6 = " << p6 << '\n';
+  std::cout << "p3 = " << p3 << '\n';
 
   return EXIT_SUCCESS;
 }

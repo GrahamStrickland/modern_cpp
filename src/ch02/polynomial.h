@@ -13,6 +13,7 @@ public:
   polynomial(polynomial &&p) noexcept;
 
   polynomial &operator=(const std::vector<double> src);
+  polynomial &operator=(const polynomial &p);
   polynomial &operator=(polynomial &&p) noexcept;
 
   friend std::ostream &operator<<(std::ostream &os, const polynomial &p);
