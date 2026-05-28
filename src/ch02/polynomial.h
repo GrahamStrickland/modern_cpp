@@ -2,17 +2,18 @@
 #define POLYNOMIAL_H
 #include <cassert>
 #include <cmath>
+#include <initializer_list>
 #include <vector>
 
 class polynomial {
 public:
-  polynomial(std::size_t degree);
-  polynomial(std::size_t degree, std::vector<double> coeffs);
   polynomial(std::vector<double> coeffs);
+  polynomial(std::initializer_list<double> coeffs);
   polynomial(polynomial &p) = default;
   polynomial(polynomial &&p) noexcept;
 
   polynomial &operator=(const std::vector<double> src);
+  polynomial &operator=(std::initializer_list<double> coeffs);
   polynomial &operator=(const polynomial &p);
   polynomial &operator=(polynomial &&p) noexcept;
 

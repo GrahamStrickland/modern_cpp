@@ -7,7 +7,7 @@
 polynomial f(double c2, double c1, double c0);
 
 int main(int argc, char *argv[]) {
-  polynomial p1{1}, p2{3, {1.0, 2.0, 3.0, 4.0}}, p3{{1.0, 0.0, 2.0}},
+  polynomial p1{0.0, 0.0, 0.0}, p2{{1.0, 2.0, 3.0, 4.0}}, p3{{1.0, 0.0, 2.0}},
       p4{{-1.2, 3.4, 0.0, -5.6}}, p5{p4};
 
   std::cout << "p1(x) = " << p1 << '\n'
@@ -43,7 +43,16 @@ int main(int argc, char *argv[]) {
             << '\n';
 
   p3 = f(2.1, 1.2, 0.2);
-  
+
+  std::cout << "p3 = " << p3 << '\n';
+
+  polynomial p7 = {1.0, 2.0, 3.0};
+  std::cout << "p7 = " << p7 << '\n';
+
+  polynomial p8{1.0, 2.0, 3.0};
+  std::cout << "p8 = " << p8 << '\n';
+
+  p3 = {1.0, 2.0, 3.0};
   std::cout << "p3 = " << p3 << '\n';
 
   return EXIT_SUCCESS;

@@ -1,20 +1,17 @@
 #include "polynomial.h"
 
+#include <algorithm>
 #include <ostream>
 
-polynomial::polynomial(std::size_t degree) : degree{degree} {
-  coeffs = std::vector<double>();
-  for (int i = 0; i <= degree; i++)
-    coeffs.push_back(0.0);
-};
+polynomial::polynomial(std::vector<double> src)
+    : coeffs{src}, degree{src.size() - 1} {};
 
-polynomial::polynomial(std::size_t degree, std::vector<double> coeffs)
-    : coeffs{coeffs}, degree{degree} {
-  assert(degree == coeffs.size() - 1);
+polynomial::polynomial(std::initializer_list<double> src)
+    : coeffs{std::vector<double>()}, degree{src.size() - 1} {
+  coeffs.reserve(src.size());
+  for (auto coeff : src)
+    coeffs.emplace_back(coeff);
 };
-
-polynomial::polynomial(std::vector<double> coeffs)
-    : coeffs{coeffs}, degree{coeffs.size() - 1} {};
 
 polynomial::polynomial(polynomial &&p) noexcept
     : coeffs{std::move(p.coeffs)}, degree{p.degree} {
@@ -22,11 +19,22 @@ polynomial::polynomial(polynomial &&p) noexcept
 };
 
 polynomial &polynomial::operator=(const std::vector<double> src) {
-  assert(degree == coeffs.size() - 1);
+  assert(degree == src.size() - 1);
 
-  coeffs.reserve(src.size());
-  for (std::size_t i = 0; i < coeffs.size(); i++)
+  for (std::size_t i = 0; i < src.size(); i++)
     coeffs[i] = src[i];
+
+  return *this;
+}
+
+polynomial &polynomial::operator=(std::initializer_list<double> src) {
+  assert(degree == src.size() - 1);
+
+  std::size_t i = 0;
+  for (auto coeff : src) {
+    coeffs[i] = coeff;
+    i++;
+  }
 
   return *this;
 }
