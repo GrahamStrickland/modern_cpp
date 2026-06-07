@@ -47,11 +47,22 @@ struct dummy {
 
 template <typename TPara> void f1(TPara p) { info(TPara, p); }
 
+template <typename TPara> void f2(const TPara &p) { info(TPara, p); }
+
+template <typename TPara> void f3(TPara &p) { info(TPara, p); }
+
+template <typename TPara> void f4(TPara &&p) { info(TPara, p); }
+
+template <typename TPara> void f5(TPara &&p) {
+  info(TPara, std::forward<TPara>(p));
+}
+
 int main(int argc, char *argv[]) {
   int i = 0;
   int &j = i;
   const int &k = i;
 
+  std::cout << "f1(TPara p) {}" << std::endl;
   f1(3);
   f1(i);
   f1(j);
@@ -60,6 +71,40 @@ int main(int argc, char *argv[]) {
   std::unique_ptr<int> up;
   // f1(up); // Error: no copy constructor
   f1(std::move(up)); // Okay: use move constructor
+
+  std::cout << "f2(TPara p) {}" << std::endl;
+  f2(3);
+  f2(i);
+  f2(j);
+  f2(k);
+
+  f2(std::move(up));
+
+  std::cout << "f3(TPara p) {}" << std::endl;
+  // f3(3);
+  f3(i);
+  f3(j);
+  f3(k);
+
+  // f3(std::move(up));
+
+  std::cout << "f4(TPara p) {}" << std::endl;
+  f4(3);
+  f4(i);
+  f4(j);
+  f4(k);
+
+  f4(std::move(i));
+  f4(std::move(up));
+
+  std::cout << "f5(TPara p) { f4(forward<TPara>(p)); }" << std::endl;
+  f5(3);
+  f5(i);
+  f5(j);
+  f5(k);
+
+  f5(std::move(i));
+  f5(std::move(up));
 
   return EXIT_SUCCESS;
 }
