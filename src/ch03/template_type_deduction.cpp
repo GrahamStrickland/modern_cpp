@@ -57,6 +57,16 @@ template <typename TPara> void f5(TPara &&p) {
   info(TPara, std::forward<TPara>(p));
 }
 
+template <typename T> void rvalue_only1(T &&arg) { info(T, arg); }
+
+template <typename T> void rvalue_only1(T &) = delete;
+
+template <typename T> void rvalue_only2(T &&arg) {
+  static_assert(std::is_rvalue_reference<decltype(arg)>::value,
+                "This function is only allowed for rvalues!");
+  info(T, arg);
+}
+
 int main(int argc, char *argv[]) {
   int i = 0;
   int &j = i;
@@ -105,6 +115,24 @@ int main(int argc, char *argv[]) {
 
   f5(std::move(i));
   f5(std::move(up));
+
+  std::cout << "rvalue_only1(T arg) {}" << std::endl;
+  rvalue_only1(3);
+  // rvalue_only1(i);
+  // rvalue_only1(j);
+  // rvalue_only1(k);
+
+  rvalue_only1(std::move(i));
+  rvalue_only1(std::move(up));
+
+  std::cout << "rvalue_only2(T arg) {}" << std::endl;
+  rvalue_only2(3);
+  // rvalue_only2(i);
+  // rvalue_only2(j);
+  // rvalue_only2(k);
+
+  rvalue_only2(std::move(i));
+  rvalue_only2(std::move(up));
 
   return EXIT_SUCCESS;
 }
