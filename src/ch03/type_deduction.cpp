@@ -1,6 +1,11 @@
 #include <cmath>
 #include <cstdlib>
 #include <iostream>
+#include <vector>
+
+template <typename Vector1, typename Vector2>
+auto operator+(const Vector1 &v1, const Vector2 &v2)
+    -> std::vector<decltype(v1[0] + v2[0])>;
 
 int main(int argc, char *argv[]) {
   auto i = 2 * 7.5, j = std::sqrt(3.7); // okay: both are double
