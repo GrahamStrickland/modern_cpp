@@ -1,26 +1,18 @@
 #include <cmath>
 #include <cstdlib>
 #include <memory>
+#include <stdexcept>
+#include <tuple>
 
 #include "../ch02/matrix_type.h"
 #include "../ch02/vector.h"
 
-auto lu(const matrix_type &A);
-void lu_dcmp(matrix_type &A, int n, std::shared_ptr<int[]> indx);
-
-int main(int argc, char *argv[]) {
-  matrix_type A(3, 3);
-  A = {{1.0, 2.0, 3.0}, {4.0, 5.0, 6.0}, {7.0, 8.0, 9.0}};
-
-  auto [LU, p] = lu(A);
-
-  return EXIT_SUCCESS;
-}
-
+// Crout's algorithm with implicit partial pivoting: A is overwritten in place
+// with its LU decomposition, indx records the row permutation.
 void lu_dcmp(matrix_type &A, int n, std::shared_ptr<int[]> indx) {
-  int imax;
+  int imax = 0;
   double big, dum, sum, temp;
-  vector vv{1.0, 1.0, 1.0};
+  vector vv(static_cast<unsigned>(n)); // implicit scaling of each row
 
   for (int i = 0; i < n; i++) {
     big = 0.0;
@@ -29,24 +21,26 @@ void lu_dcmp(matrix_type &A, int n, std::shared_ptr<int[]> indx) {
         big = temp;
 
     if (big == 0.0)
-      throw std::runtime_error("Singular matrix in routine lu_solve");
+      throw std::runtime_error("Singular matrix in routine lu_dcmp");
 
     vv[i] = 1.0 / big;
   }
 
   for (int j = 0; j < n; j++) {
+    // Upper triangle: elements above the diagonal (i < j).
     for (int i = 0; i < j; i++) {
       sum = A(i, j);
       for (int k = 0; k < i; k++)
-        sum -= A(i, j) * A(k, j);
+        sum -= A(i, k) * A(k, j);
       A(i, j) = sum;
     }
 
+    // Lower triangle and diagonal, tracking the best pivot.
     big = 0.0;
     for (int i = j; i < n; i++) {
       sum = A(i, j);
       for (int k = 0; k < j; k++)
-        sum -= A(i, j) * A(k, j);
+        sum -= A(i, k) * A(k, j);
       A(i, j) = sum;
 
       if ((dum = vv[i] * fabs(sum)) >= big) {
@@ -57,9 +51,9 @@ void lu_dcmp(matrix_type &A, int n, std::shared_ptr<int[]> indx) {
 
     if (j != imax) {
       for (int k = 0; k < n; k++) {
-        sum = A(imax, k);
+        temp = A(imax, k);
         A(imax, k) = A(j, k);
-        A(j, k) = dum;
+        A(j, k) = temp;
       }
       vv[imax] = vv[j];
     }
@@ -68,42 +62,42 @@ void lu_dcmp(matrix_type &A, int n, std::shared_ptr<int[]> indx) {
     if (A(j, j) == 0.0)
       A(j, j) = 1.0e-20;
 
-    if (j != n) {
+    // Divide the column below the diagonal by the pivot.
+    if (j != n - 1) {
       dum = 1.0 / A(j, j);
-      for (int i = j; i < n; i++)
+      for (int i = j + 1; i < n; i++)
         A(i, j) *= dum;
     }
   }
 }
 
+// Returns the LU decomposition of A together with its row permutation.
 auto lu(const matrix_type &A) {
-  int ii = 0, ip;
-  double sum;
-  std::shared_ptr<int[]> indx{new int[3]};
-  vector p{0.0, 0.0, 0.0};
-  matrix_type LU(3, 3);
-  LU = A;
+  constexpr int n = 3;
+  std::shared_ptr<int[]> indx{new int[n]};
+  vector p(static_cast<unsigned>(n));
+  matrix_type LU(n, n);
 
-  lu_dcmp(A, 3, indx);
+  for (int i = 0; i < n; i++)
+    for (int j = 0; j < n; j++)
+      LU(i, j) = A(i, j);
 
-  for (int i = 0; i < 3; i++) {
-    ip = indx[i];
-    sum = u[ip];
-    u[ip] = u[i];
-    if (ii > 0)
-      for (int j = ii; j <= i; j++)
-        sum -= A(i, j) * u[j];
-    else if (sum > 0)
-      ii = i;
-    u[i] = sum;
-  }
+  lu_dcmp(LU, n, indx);
 
-  for (int i = 2; i >= 0; i--) {
-    sum = u[i];
-    for (int j = i + 1; j < 3; j++)
-      sum -= A(i, j) * u[j];
-    p[i] = sum / A(i, i);
-  }
+  for (int i = 0; i < n; i++)
+    p[i] = indx[i];
 
-  return tuple<matrix_type, vector>(LU, p);
+  return std::tuple<matrix_type, vector>(std::move(LU), std::move(p));
+}
+
+int main() {
+  matrix_type A(3, 3);
+  A = {{1.0, 2.0, 3.0}, {4.0, 5.0, 6.0}, {7.0, 8.0, 10.0}};
+
+  auto [LU, p] = lu(A);
+
+  std::cout << "A = " << A << "\nLU = " << LU << "\npermutation = " << p
+            << '\n';
+
+  return EXIT_SUCCESS;
 }

@@ -11,12 +11,12 @@ public:
       : nrows{nrows}, ncols{ncols}, data{new double[nrows * ncols]} {
     for (int row = 0; row < nrows; row++)
       for (int col = 0; col < ncols; col++)
-        data[row * nrows + col] = 0.0;
+        data[row * ncols + col] = 0.0;
   }
 
   double &operator()(int row, int col) const {
-    assert(row < nrows && col < ncols);
-    return data[row * nrows + col];
+    assert(row >= 0 && row < nrows && col >= 0 && col < ncols);
+    return data[row * ncols + col];
   }
 
   matrix_type &
@@ -29,20 +29,16 @@ public:
       int j = 0;
 
       for (const auto &element : row) {
-        data[i * nrows + j] = element;
+        data[i * ncols + j] = element;
         j++;
       }
       i++;
-      ncols = j;
     }
-    nrows = i;
 
     return *this;
   }
 
   friend std::ostream &operator<<(std::ostream &out, const matrix_type &m);
-
-  ~matrix_type() {}
 
 private:
   int nrows, ncols;
@@ -55,7 +51,7 @@ inline std::ostream &operator<<(std::ostream &out, const matrix_type &m) {
   for (int row = 0; row < m.nrows; row++) {
     out << (row == 0 ? "" : " ") << '[';
     for (int col = 0; col < m.ncols; col++)
-      out << m.data[row * m.nrows + col] << (col < m.ncols - 1 ? ", " : "]");
+      out << m.data[row * m.ncols + col] << (col < m.ncols - 1 ? ", " : "]");
     out << (row < m.nrows - 1 ? ",\n" : "");
   }
 
