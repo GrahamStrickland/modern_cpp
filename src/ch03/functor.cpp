@@ -49,6 +49,37 @@ private:
   derivative<F, T> fp;
 };
 
+template <unsigned N, typename F, typename T> class nth_derivative {
+  using prev_derivative = nth_derivative<N - 1, F, T>;
+
+public:
+  nth_derivative(const F &f, const T &h) : h{h}, fp{f, h} {}
+
+  T operator()(const T &x) const {
+    return N & 1 ? (fp(x + h) - fp(x)) / h : (fp(x) - fp(x - h)) / h;
+  }
+
+private:
+  T h;
+  prev_derivative fp;
+};
+
+// template <typename F, typename T> class nth_derivative<1, F, T> {
+// public:
+//   nth_derivative(const F &f, const T &h) : f{f}, h{h} {}
+
+//   T operator()(const T &x) const { return (f(x + h) - f(x)) / h; }
+
+// private:
+//   const F &f;
+//   T h;
+// };
+
+template <typename F, typename T>
+class nth_derivative<1, F, T> : public derivative<F, T> {
+  using derivative<F, T>::derivative;
+};
+
 int main() {
   std::cout << fin_diff(sin_plus_cos, 1., 0.001) << '\n';
   std::cout << fin_diff(sin_plus_cos, 0., 0.001) << '\n';
@@ -73,6 +104,14 @@ int main() {
   second_derivative<psc_f, double> dd_psc_2_o{psc_f(1.0), 0.001};
   std::cout << "2nd der. of sin(x) + cos(x) at 0 is " << dd_psc_2_o(0.0)
             << '\n';
+
+  nth_derivative<22, psc_f, double> d22_psc_o{psc_f(1.0), 0.00001};
+
+  // nth_derivative<7, psc_f, double> d7_psc_o{psc_o, 0.00001};
+
+  auto d7_psc_o = nth_derivative<7, psc_f, double>{psc_o, 0.00001};
+  nth_derivative<decltype(psc_o),
+                 decltype(0.00001), 7> d7_psc_o{psc_o, 0.00001};
 
   return EXIT_SUCCESS;
 }
