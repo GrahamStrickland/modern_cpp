@@ -80,6 +80,11 @@ class nth_derivative<1, F, T> : public derivative<F, T> {
   using derivative<F, T>::derivative;
 };
 
+template <unsigned N, typename F, typename T>
+nth_derivative<N, F, T> derive(const F &f, const T &h) {
+  return nth_derivative<N, F, T>{f, h};
+}
+
 int main() {
   std::cout << fin_diff(sin_plus_cos, 1., 0.001) << '\n';
   std::cout << fin_diff(sin_plus_cos, 0., 0.001) << '\n';
@@ -109,9 +114,15 @@ int main() {
 
   // nth_derivative<7, psc_f, double> d7_psc_o{psc_o, 0.00001};
 
-  auto d7_psc_o = nth_derivative<7, psc_f, double>{psc_o, 0.00001};
-  nth_derivative<decltype(psc_o),
-                 decltype(0.00001), 7> d7_psc_o{psc_o, 0.00001};
+  // auto d7_psc_o = nth_derivative<7, psc_f, double>{psc_o, 0.00001};
+  // nth_derivative<decltype(psc_o), decltype(0.00001), 7> d7_psc_o{psc_o,
+  //                                                                0.00001};
+
+  // auto d7_psc_o = derive<psc_f, double, 7>(psc_o, 0.00001);
+
+  auto d7_psc_o = derive<7>(psc_o, 0.00001);
+
+  std::cout << "7th der. of sin(x) + cos(x) at 0 is " << d7_psc_o(0.0) << '\n';
 
   return EXIT_SUCCESS;
 }
