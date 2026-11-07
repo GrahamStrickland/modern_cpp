@@ -1,3 +1,2 @@
 CompileFlags:
-Add:
-  [-std=c++26, -Wno-c++20-extensions, -Wno-c++23-extensions, -Wno-c++26-extensions, -Wall, -Wextra]
+  Add: [-std=c++26, -Wall, -Wextra]
