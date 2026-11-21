@@ -3,7 +3,7 @@
 #include <sstream>
 #include <string>
 
-template <typename T> std::string to_string(T value) {
+template <typename T> std::string to_string(const T &value) {
   std::stringstream sstream;
   sstream << value;
   return sstream.str();
